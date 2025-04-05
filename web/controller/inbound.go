@@ -327,3 +327,12 @@ func (a *InboundController) delDepletedClients(c *gin.Context) {
 func (a *InboundController) onlines(c *gin.Context) {
 	jsonObj(c, a.inboundService.GetOnlineClients(), nil)
 }
+
+func (a *InboundController) getClientByEmail(c *gin.Context) {
+	_, client, err := a.inboundService.GetClientByEmail(c.PostForm("email"))
+	if err != nil {
+		jsonMsg(c, "Something went wrong!", err)
+		return
+	}
+	jsonObj(c, client, nil)
+}
