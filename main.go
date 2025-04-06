@@ -23,7 +23,7 @@ import (
 func runWebServer() {
 	log.Printf("Starting %v %v", config.GetName(), config.GetVersion())
 
-	switch config.GetLogLevel() {
+	switch config.Debug {
 	case config.Debug:
 		logger.InitLogger(logging.DEBUG)
 	case config.Info:

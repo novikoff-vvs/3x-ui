@@ -63,7 +63,7 @@ func GetDBFolderPath() string {
 }
 
 func GetDBPath() string {
-	return fmt.Sprintf("%s/%s.db", GetDBFolderPath(), GetName())
+	return fmt.Sprintf("%s/%s.db", "./db", GetName())
 }
 
 func GetLogFolder() string {
