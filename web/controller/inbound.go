@@ -41,6 +41,7 @@ func (a *InboundController) initRouter(g *gin.RouterGroup) {
 	g.POST("/delDepletedClients/:id", a.delDepletedClients)
 	g.POST("/import", a.importInbound)
 	g.POST("/onlines", a.onlines)
+	g.GET("/getClientByEmail", a.getClientByEmail)
 }
 
 func (a *InboundController) getInbounds(c *gin.Context) {
