@@ -3,8 +3,7 @@ version: "3"
 
 services:
   3x-ui:
-    build:
-      dockerfile: Dockerfile
+    image: registry.novvs.ru/3x-ui:latest
     container_name: 3x-ui
     hostname: ${HOST}
     volumes:
