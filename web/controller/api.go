@@ -48,6 +48,7 @@ func (a *APIController) initRouter(g *gin.RouterGroup) {
 		{"POST", "/delDepletedClients/:id", a.inboundController.delDepletedClients},
 		{"POST", "/onlines", a.inboundController.onlines},
 		{"GET", "/getClientByEmail", a.inboundController.getClientByEmail},
+		{"GET", "/getLink/:inboundid/:email", a.inboundController.getLinkByEmail},
 	}
 
 	for _, route := range inboundRoutes {

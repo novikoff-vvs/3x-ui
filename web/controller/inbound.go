@@ -3,7 +3,9 @@ package controller
 import (
 	"encoding/json"
 	"fmt"
+	"net/http"
 	"strconv"
+	"x-ui/sub"
 
 	"x-ui/database/model"
 	"x-ui/web/service"
@@ -14,6 +16,7 @@ import (
 
 type InboundController struct {
 	inboundService service.InboundService
+	subService     sub.SubService
 	xrayService    service.XrayService
 }
 
@@ -42,6 +45,7 @@ func (a *InboundController) initRouter(g *gin.RouterGroup) {
 	g.POST("/import", a.importInbound)
 	g.POST("/onlines", a.onlines)
 	g.GET("/getClientByEmail", a.getClientByEmail)
+	g.GET("/getLink/:inboundid/:email", a.getLinkByEmail)
 }
 
 func (a *InboundController) getInbounds(c *gin.Context) {
@@ -344,4 +348,28 @@ func (a *InboundController) getClientByEmail(c *gin.Context) {
 		return
 	}
 	jsonObj(c, client, nil)
+}
+
+func (a *InboundController) getLinkByEmail(c *gin.Context) {
+	inboudid := c.Param("inboundid")
+	id, err := strconv.ParseInt(inboudid, 10, 10)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+		c.Abort()
+		return
+	}
+	inboud, err := a.inboundService.GetInbound(int(id))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+		c.Abort()
+		return
+	}
+	link := a.subService.GetLink(inboud, c.Param("email"))
+	c.JSON(http.StatusOK, gin.H{
+		"link": link,
+	})
 }
