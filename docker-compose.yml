@@ -18,9 +18,3 @@ services:
     tty: true
     network_mode: host
     restart: unless-stopped
-    networks:
-       - infrastructure_network
-
-networks:
-  infrastructure_network:
-    external: true
