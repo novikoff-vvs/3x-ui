@@ -329,7 +329,15 @@ func (a *InboundController) onlines(c *gin.Context) {
 }
 
 func (a *InboundController) getClientByEmail(c *gin.Context) {
-	_, client, err := a.inboundService.GetClientByEmail(c.PostForm("email"))
+	data := struct {
+		Email string `json:"email"`
+	}{}
+	err := c.BindJSON(&data)
+	if err != nil {
+		jsonMsg(c, "Something went wrong!", err)
+		return
+	}
+	_, client, err := a.inboundService.GetClientByEmail(data.Email)
 	if err != nil {
 		jsonMsg(c, "Something went wrong!", err)
 		return
